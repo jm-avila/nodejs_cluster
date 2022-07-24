@@ -1,20 +1,16 @@
 import { cpus } from "os";
-import { z } from "zod";
-
-const getArbitraryMaxWorkers = () => {
-  const validationResult = z
-    .number()
-    .safeParse(+process.env.ARBITRARY_MAX_WORKERS);
-  if (validationResult.success) return validationResult.data;
-};
+import { marshallNumber } from "./marshallNumber";
 
 export const getMaxWorkers = () => {
   const totalCPUs = cpus().length;
-  const arbitraryMaxWorkers = getArbitraryMaxWorkers();
-  const isValidArbitraryMaxWorkers =
-    typeof arbitraryMaxWorkers === "number" && arbitraryMaxWorkers <= totalCPUs;
-  return {
-    totalCPUs,
-    maxWorkers: isValidArbitraryMaxWorkers ? arbitraryMaxWorkers : totalCPUs,
-  };
+  const arbitraryMaxWorkers = marshallNumber(process.env.ARBITRARY_MAX_WORKERS);
+  const isValidArbitraryMaxWorkers = arbitraryMaxWorkers <= totalCPUs;
+  const maxWorkers = isValidArbitraryMaxWorkers
+    ? arbitraryMaxWorkers
+    : totalCPUs;
+
+  console.log(`Number of CPU's: ${totalCPUs}`);
+  console.log(`Number of Workers: ${maxWorkers}`);
+
+  return maxWorkers;
 };
