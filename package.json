@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "loadtest": "loadtest -n 1000 -c 100 --rps 200 http://localhost:7000/5",
-    "dev": "nodemon src/index.ts",
-    "startLint": "tslint -c tslint.json 'src/**/*.ts'"
+    "dev": "nodemon src/cluster.ts",
+    "compile": "tsc"
   },
   "repository": {
     "type": "git",

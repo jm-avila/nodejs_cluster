@@ -19,7 +19,9 @@ Even with the Call Stack, Callback Queue and Job Queue, the node.js process rema
 
 If too many request are performed simultaneously, the server instance will overload before the machine overloads. With clusters we can use a machine full potential by having many call stacks. Even is a synchronous operation takes a long time blocking it's process call stack, the other requests won't as the will be place in a different call stack.
 
-## Cluster module
+We can use node.js clusters with the Cluster module or with PM2.
+
+### Cluster module
 
 A single instance of Node.js run in a single thread. Clusters enable us to create child processes that share the same port, thus allowing us to take advantage of a multi-core system.
 
@@ -28,6 +30,57 @@ The worker processes are spawned using the child_process.fork() method, so that 
 The cluster module supports two methods of distributing incoming connections.
 
 More at the [Official Docs](https://nodejs.org/api/cluster.html)
+
+### PM2 clusters
+
+PM2 is an advanced, production process manager fon Node.js that will help you manage and keep your application online 24/7.
+
+More at the [offical docs](https://pm2.keymetrics.io/docs/usage/quick-start/)
+
+1. Install PM2
+   You can install it globally
+
+```
+   npm i --global pm2
+```
+
+or as a dev dependencies for testing, you would need to call it via package.json scripts.
+
+```
+   npm i --save-dev pm2
+```
+
+2. Generate ecosystem file
+
+```
+   pm2 ecosystem
+```
+
+3. Configure ecosystem file, for example as in the repo file.
+
+4. Start the apps using the ecosystem file
+
+```
+   pm2 start ecosystem.config.js
+```
+
+5. View Logs
+
+```
+   pm2 logs [APP_NAME]
+```
+
+6. Kill daemon process
+
+```
+   pm2 kill
+```
+
+7. For more commands
+
+```
+   pm2 -h
+```
 
 ## Load Test
 
